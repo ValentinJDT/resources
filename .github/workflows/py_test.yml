@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Python Script
+        uses: jannekem/run-python-script-action@v1.2
+
+      - name: Run Python Script
+        # You may pin to the exact commit or the version.
+        # uses: jannekem/run-python-script-action@088ec07b341540e5742f0426f5fdaf81950bac45
+        uses: jannekem/run-python-script-action@v1.2
+        with:
+          # Python script
+          script: |
+            import sys
+            import hashlib
+
+            # BUF_SIZE is totally arbitrary, change for your app!
+            BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
+
+            md5 = hashlib.md5()
+            sha1 = hashlib.sha1()
+
+            with open("/BarberousseRS+.zip", 'rb') as f:
+                while True:
+                    data = f.read(BUF_SIZE)
+                    if not data:
+                        break
+                    md5.update(data)
+                    sha1.update(data)
+
+            print("MD5: {0}".format(md5.hexdigest()))
+            print("SHA1: {0}".format(sha1.hexdigest()))
