@@ -25,13 +25,16 @@ jobs:
             import hashlib
             BUF_SIZE = 65536
 
-            sha1 = hashlib.sha1()
+            files = ["BarberousseRS-.zip", "BarberousseRS.zip", "BarberousseRS+.zip"]
+            
+            for i in range(len(files)):
+              sha1 = hashlib.sha1()
 
-            with open("${{ github.workspace }}/BarberousseRS+.zip", 'rb') as f:
-                while True:
-                    data = f.read(BUF_SIZE)
-                    if not data:
-                        break
-                    sha1.update(data)
+              with open("${{ github.workspace }}/BarberousseRS+.zip", 'rb') as f:
+                  while True:
+                      data = f.read(BUF_SIZE)
+                      if not data:
+                          break
+                      sha1.update(data)
 
-            print("SHA1: {0}".format(sha1.hexdigest()))
+              print("SHA1: {0}".format(sha1.hexdigest()))
