@@ -25,16 +25,27 @@ jobs:
             import hashlib
             BUF_SIZE = 65536
 
-            files = ["BarberousseRS-.zip", "BarberousseRS.zip", "BarberousseRS+.zip"]
+            files = ["BarberousseRS-", "BarberousseRS", "BarberousseRS+"]
             
             for i in range(len(files)):
               sha1 = hashlib.sha1()
               
-              with open("%s/%s" % ("${{ github.workspace }}/",files[i]), 'rb') as f:
+              with open("%s/%s.%s" % ("${{ github.workspace }}/",files[i],".zip"), 'rb') as f:
                   while True:
                       data = f.read(BUF_SIZE)
                       if not data:
                           break
                       sha1.update(data)
-
+                      
               print(i, " - SHA1: {0}".format(sha1.hexdigest()))
+              
+              with open("%s/%s.%s" % ("${{ github.workspace }}/",files[i],".zip", 'w') as q:
+                q.write("{0}".format(sha1.hexdigest()))
+                
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "update hashs"
+          git push
