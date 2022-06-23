@@ -16,6 +16,6 @@ jobs:
         uses: jannekem/run-python-script-action@v1.2
 
       - name: Test
-        run: ls -l ${{ github.repository }}
+        run: ls -l ${{ github.workspace }}
 
       
