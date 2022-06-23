@@ -29,8 +29,8 @@ jobs:
             
             for i in range(len(files)):
               sha1 = hashlib.sha1()
-
-              with open("${{ github.workspace }}/BarberousseRS+.zip", 'rb') as f:
+              
+              with open("%s/%s" % ("${{ github.workspace }}/",files[i]), 'rb') as f:
                   while True:
                       data = f.read(BUF_SIZE)
                       if not data:
