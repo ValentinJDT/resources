@@ -23,7 +23,7 @@ jobs:
           script: |
             import sys
             import hashlib
-            BUF_SIZE = 32768
+            BUF_SIZE = 65536
 
             files = ["BarberousseRS-", "BarberousseRS", "BarberousseRS+"]
             
